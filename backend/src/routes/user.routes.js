@@ -19,9 +19,7 @@ router.route("/change-password").post(verifyJWT, changePassword);
 
 router.route("/logout").post(verifyJWT, logoutUser);
 
-router
-  .route("/profile")
-  .post(upload.single("avatar"), uploadProfilePicture);
+router.route("/profile").post(verifyJWT, upload.single("avatar"), uploadProfilePicture);
 
 router.route("/current-user").get(verifyJWT, getCurrentUser);
 

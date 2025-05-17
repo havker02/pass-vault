@@ -17,15 +17,13 @@ const Login = () => {
   });
 
   useEffect(() => {
-    const checkAuth = async () => {
+  const checkAuth = async () => {
       try {
         const response = await axios.get(`${baseUrl}/api/v1/user/current-user`, {
           withCredentials: true
         })
-        if(response.status === 200) {
+        if (response.status === 200 && response.data?.user) {
           navigate("/")
-        } else {
-          setIsLoading(false)
         }
       } catch (error) {
         setIsLoading(false)

@@ -46,7 +46,7 @@ const formAction = `${baseUrl}/api/v1/user/register`;
         const response = await axios.get(`${baseUrl}/api/v1/user/current-user`, {
           withCredentials: true
         })
-  if(response.status === 200) {
+  if(response.status === 200 && response.data?.user) {
           navigate("/")
         } else {
           setIsLoading(false)

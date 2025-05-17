@@ -194,7 +194,7 @@ const uploadProfilePicture = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Upload to cloudinary failed" });
 
-    const userId = "6820e9ba44b0dc70cf1ae029";
+    const userId = req.user?._id
 
     const prevAvatarId = await User.findById(userId).select("+avatarPublicId");
 

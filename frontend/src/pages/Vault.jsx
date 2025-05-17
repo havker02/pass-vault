@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaPlus } from "react-icons/fa";
 import { IoMdLock } from "react-icons/io";
 
 const Vault = () => {
+  const baseUrl = import.meta.env.VITE_BACKEND_URL
+  
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -13,25 +14,18 @@ const Vault = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/current-user`,
-          {
-            withCredentials: true,
-          },
-        );
-        if (!response.data.success) {
-          navigate("/login");
-        } else {
-          setUser(response.data.user);
-        }
+        const response = await axios.get(`${baseUrl}/api/v1/user/current-user`, {
+          withCredentials: true
+        })
+        setIsLoading(false)
+        setUser(response?.data?.user)
       } catch (error) {
-        navigate("/login");
-      } finally {
-        setIsLoading(false);
+        setIsLoading(false)
+        navigate("/login")
       }
-    };
-    checkAuth();
-  }, []);
+    }
+    checkAuth()
+  }, [])
 
   if (isLoading) return null;
 
